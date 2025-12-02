@@ -33,7 +33,7 @@ self.addEventListener('fetch', event => {
                 }
                 return fetch(event.request).then(
                     function(response) {
-                        if(!response || response.status !== 200) {
+                        if (!response || response.status !== 200 && response.type === 'basic') {
                             return response;
                         }
 
