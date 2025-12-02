@@ -9,9 +9,6 @@
 </head>
 <body>
     <div id="tutorial" class="container">
-        <h1>Welcome!</h1>
-        <p>This is a Progressive Web App (PWA) that runs a text-to-image generator entirely on your device.</p>
-    <div id="tutorial">
         <h1>Welcome to the Local Image Generator</h1>
         <p>This is a Progressive Web App (PWA) that can generate images directly on your device.</p>
         <h2>How to Install on iOS</h2>
@@ -39,6 +36,13 @@
             <textarea id="prompt" placeholder="A futuristic city at sunset, cinematic lighting..."></textarea>
             <div class="settings">
                 <div class="setting">
+                    <label for="model">Model:</label>
+                    <select id="model">
+                        <option value="sd-turbo">SD-Turbo</option>
+                        <option value="janus-pro-1b">Janus-Pro-1B</option>
+                    </select>
+                </div>
+                <div class="setting">
                     <label for="steps">Steps:</label>
                     <input type="number" id="steps" value="1" min="1" max="10">
                 </div>
@@ -60,31 +64,6 @@
             </div>
             <a id="save" href="#" download="generated_image.png">Save Image</a>
         </div>
-        <p>Once installed, you can launch the app from your home screen to access the image generator.</p>
-    </div>
-
-    <div id="app" style="display: none;">
-        <h1>Local Image Generator</h1>
-        <textarea id="prompt" placeholder="Enter a prompt..."></textarea>
-        <div class="settings">
-            <label for="steps">Steps:</label>
-            <input type="number" id="steps" value="1" min="1" max="10">
-            <label for="seed">Seed:</label>
-            <input type="number" id="seed" value="42">
-            <label for="resolution">Resolution:</label>
-            <select id="resolution">
-                <option value="512">512x512</option>
-            </select>
-        </div>
-        <button id="generate">Generate</button>
-        <div id="progress-container">
-            <progress id="progress" value="0" max="100"></progress>
-            <span id="progress-label"></span>
-        </div>
-        <div id="output">
-            <img id="result" src="" alt="Generated Image">
-        </div>
-        <a id="save" href="#" download="generated_image.png">Save Image</a>
     </div>
 
     <script>

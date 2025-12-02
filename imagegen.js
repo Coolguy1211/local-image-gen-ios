@@ -2,27 +2,27 @@ import { Txt2ImgWorkerClient } from 'https://cdn.jsdelivr.net/npm/web-txt2img@0.
 
 const client = Txt2ImgWorkerClient.createDefault();
 
-let modelLoaded = false;
+let modelLoaded = '';
 
-export async function init(progressCallback) {
+export async function init(model, progressCallback) {
     const caps = await client.detect();
     if (!caps.webgpu) {
         throw new Error('WebGPU not supported');
     }
 
-    const loadRes = await client.load('sd-turbo', {
+    const loadRes = await client.load(model, {
         backendPreference: ['webgpu'],
     }, progressCallback);
 
     if (!loadRes?.ok) {
         throw new Error(loadRes?.message ?? 'load failed');
     }
-    modelLoaded = true;
+    modelLoaded = model;
 }
 
-export async function generate(prompt, seed, steps, progressCallback) {
-    if (!modelLoaded) {
-        throw new Error('Model not loaded');
+export async function generate(model, prompt, seed, steps, progressCallback) {
+    if (modelLoaded !== model) {
+        await init(model, progressCallback);
     }
 
     const { promise } = client.generate(
