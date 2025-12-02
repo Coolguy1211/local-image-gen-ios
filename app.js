@@ -1,6 +1,7 @@
 import { init, generate } from './imagegen.js';
 
 const promptEl = document.getElementById('prompt');
+const modelEl = document.getElementById('model');
 const stepsEl = document.getElementById('steps');
 const seedEl = document.getElementById('seed');
 const resolutionEl = document.getElementById('resolution');
@@ -16,13 +17,11 @@ let generating = false;
 
 async function main() {
     try {
-        await init((p) => {
+        await init(modelEl.value, (p) => {
             console.log('load:', p);
             updateDownloadProgress(p);
         });
         loadingOverlay.style.display = 'none';
-            updateProgress(p, 'Loading model...');
-        });
         generateBtn.disabled = false;
         generateBtn.textContent = 'Generate';
     } catch (err) {
@@ -43,6 +42,7 @@ generateBtn.addEventListener('click', async () => {
 
     try {
         const imageUrl = await generate(
+            modelEl.value,
             promptEl.value,
             parseInt(seedEl.value),
             parseInt(stepsEl.value),
@@ -52,10 +52,6 @@ generateBtn.addEventListener('click', async () => {
         );
         resultEl.src = imageUrl;
         resultEl.style.display = 'block';
-                updateProgress(p, 'Generating...');
-            }
-        );
-        resultEl.src = imageUrl;
         saveBtn.href = imageUrl;
         saveBtn.style.display = 'block';
     } catch (err) {
