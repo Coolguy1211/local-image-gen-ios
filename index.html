@@ -8,6 +8,9 @@
     <link rel="manifest" href="manifest.json">
 </head>
 <body>
+    <div id="tutorial" class="container">
+        <h1>Welcome!</h1>
+        <p>This is a Progressive Web App (PWA) that runs a text-to-image generator entirely on your device.</p>
     <div id="tutorial">
         <h1>Welcome to the Local Image Generator</h1>
         <p>This is a Progressive Web App (PWA) that can generate images directly on your device.</p>
@@ -17,6 +20,46 @@
             <li>Scroll down and tap "Add to Home Screen".</li>
             <li>Follow the on-screen instructions.</li>
         </ol>
+        <p>Once installed, launch the app from your home screen to generate images, even when you're offline.</p>
+    </div>
+
+    <div id="app" class="container" style="display: none;">
+        <div id="loading-overlay" class="overlay">
+            <div class="loading-box">
+                <h2>Downloading Model</h2>
+                <p>Please wait, this may take a moment. The model will be cached for future offline use.</p>
+                <progress id="download-progress" value="0" max="100"></progress>
+                <span id="download-label">0%</span>
+            </div>
+        </div>
+
+        <div class="app-content">
+            <h1>Local Image Generator</h1>
+            <p class="subtitle">Generate images from text prompts directly on your device.</p>
+            <textarea id="prompt" placeholder="A futuristic city at sunset, cinematic lighting..."></textarea>
+            <div class="settings">
+                <div class="setting">
+                    <label for="steps">Steps:</label>
+                    <input type="number" id="steps" value="1" min="1" max="10">
+                </div>
+                <div class="setting">
+                    <label for="seed">Seed:</label>
+                    <input type="number" id="seed" value="42">
+                </div>
+                <div class="setting">
+                    <label for="resolution">Resolution:</label>
+                    <select id="resolution" disabled>
+                        <option value="512">512x512</option>
+                    </select>
+                </div>
+            </div>
+            <button id="generate" disabled>Loading Model...</button>
+            <div id="output">
+                <div id="spinner" class="spinner" style="display: none;"></div>
+                <img id="result" src="" alt="Generated Image">
+            </div>
+            <a id="save" href="#" download="generated_image.png">Save Image</a>
+        </div>
         <p>Once installed, you can launch the app from your home screen to access the image generator.</p>
     </div>
 
