@@ -65,7 +65,7 @@ button:hover {
 }
 
 #save {
-    display: block;
+    display: none;
     text-align: center;
     margin-top: 1rem;
 }
