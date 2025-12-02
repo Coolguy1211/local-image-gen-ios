@@ -21,6 +21,8 @@ async function main() {
             updateDownloadProgress(p);
         });
         loadingOverlay.style.display = 'none';
+            updateProgress(p, 'Loading model...');
+        });
         generateBtn.disabled = false;
         generateBtn.textContent = 'Generate';
     } catch (err) {
@@ -36,6 +38,7 @@ generateBtn.addEventListener('click', async () => {
     generating = true;
     spinner.style.display = 'block';
     resultEl.style.display = 'none';
+    generateBtn.textContent = 'Generating...';
     generateBtn.disabled = true;
 
     try {
@@ -49,6 +52,10 @@ generateBtn.addEventListener('click', async () => {
         );
         resultEl.src = imageUrl;
         resultEl.style.display = 'block';
+                updateProgress(p, 'Generating...');
+            }
+        );
+        resultEl.src = imageUrl;
         saveBtn.href = imageUrl;
         saveBtn.style.display = 'block';
     } catch (err) {
@@ -57,6 +64,7 @@ generateBtn.addEventListener('click', async () => {
     } finally {
         generating = false;
         spinner.style.display = 'none';
+        generateBtn.textContent = 'Generate';
         generateBtn.disabled = false;
     }
 });
@@ -69,4 +77,22 @@ function updateDownloadProgress(p) {
     }
 }
 
+function updateProgress(p, status) {
+    const progressEl = document.getElementById('progress');
+    const progressLabelEl = document.getElementById('progress-label');
+
+    if (!progressEl || !progressLabelEl) return;
+
+    if (p.phase === 'done') {
+        progressEl.style.display = 'none';
+        progressLabelEl.textContent = '';
+    } else {
+        progressEl.style.display = 'block';
+        progressEl.value = p.pct;
+        progressLabelEl.textContent = `${status} ${p.pct}%`;
+    }
+}
+
+generateBtn.disabled = true;
+generateBtn.textContent = 'Loading model...';
 main();
