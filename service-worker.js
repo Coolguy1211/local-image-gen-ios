@@ -1,14 +1,12 @@
-const CACHE_NAME = 'image-generator-v2';
+const CACHE_NAME = 'image-generator-v5';
 const urlsToCache = [
-    '/',
-    '/index.html',
-    '/app.html',
-    '/style.css',
-    '/app.js',
-    '/imagegen.js',
-    '/manifest.json',
-    '/icons/icon-192.png',
-    '/icons/icon-512.png',
+    './index.html',
+    './style.css',
+    './app.js',
+    './imagegen.js',
+    './manifest.json',
+    './icons/icon-192.png',
+    './icons/icon-512.png',
     'https://cdn.jsdelivr.net/npm/web-txt2img@0.3.1/dist/index.js',
     'https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2/dist/transformers.min.js',
     'https://huggingface.co/schmuell/sd-turbo-ort-web/resolve/main/unet/model.onnx',
@@ -35,7 +33,7 @@ self.addEventListener('fetch', event => {
                 }
                 return fetch(event.request).then(
                     function(response) {
-                        if(!response || response.status !== 200 || response.type !== 'basic') {
+                        if(!response || response.status !== 200) {
                             return response;
                         }
 
